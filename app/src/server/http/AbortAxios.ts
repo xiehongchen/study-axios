@@ -2,7 +2,7 @@
  * @Author: xiehongchen 1754581057@qq.com
  * @Date: 2024-03-01 11:59:46
  * @LastEditors: xiehongchen 1754581057@qq.com
- * @LastEditTime: 2024-03-01 16:42:55
+ * @LastEditTime: 2024-03-01 18:27:40
  * @FilePath: /study-axios/app/src/server/http/AbortAxios.ts
  * @Description: 
  * 认真学习每一天
@@ -29,7 +29,7 @@ class AbortAxios {
    * @param config 请求配置
    */
   addPending(config: AxiosRequestConfig) {
-    console.log('pendingMap---before', pendingMap)
+    console.log('pendingMap---before', Object.fromEntries(pendingMap))
     this.removePending(config)
     const url = getUrl(config)
     const abortController = new AbortController()
@@ -37,7 +37,7 @@ class AbortAxios {
     if (!pendingMap.has(url)) {
       pendingMap.set(url, abortController)
     }
-    console.log('pendingMap---after', pendingMap)
+    console.log('pendingMap---after', Object.fromEntries(pendingMap))
   }
 
   /**
@@ -68,6 +68,10 @@ class AbortAxios {
    */
   clear() {
     pendingMap.clear()
+  }
+
+  getAllPending() {
+    return pendingMap
   }
 }
 

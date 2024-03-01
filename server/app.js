@@ -16,6 +16,29 @@ app.get('/a', (req, res) => {
 app.post('/b', (req, res) => {
   res.send({
     code: 1,
+    message: '请求成功！'
+  })
+})
+app.post('/d', (req, res) => {
+  console.log('req', req.rawHeaders)
+  setTimeout(() => {
+    res.send({
+      code: 1,
+      message: '请求成功！' + req.body.message
+    })
+  }, 2000)
+})
+app.post('/e', (req, res) => {
+  setTimeout(() => {
+    res.send({
+      code: 1,
+      message: '请求成功！' + req.body.message
+    })
+  }, 2000)
+})
+app.post('/f', (req, res) => {
+  res.send({
+    code: 1,
     message: '请求成功！' + req.body.message
   })
 })

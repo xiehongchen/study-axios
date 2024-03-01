@@ -11,9 +11,9 @@ import AbortAxios from './AbortAxios'
 const _RequstInterceptors: RequstInterceptors = {
   // 请求拦截器
   requestInterceptors(config) {
-    console.log('stopRequest', stopRequest)
-    const abortAxios = new AbortAxios()
-    abortAxios.addPending(config)
+    // console.log('stopRequest', stopRequest)
+    // const abortAxios = new AbortAxios()
+    // abortAxios.addPending(config)
     return config
   },
   // 请求错误拦截器
