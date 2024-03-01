@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按顺序执行请求示例</title>
+</head>
+<body>
+    <h1>按顺序执行请求示例</h1>
+    <button onclick="startRequests()">开始请求</button>
+    <button onclick="pauseRequests()">暂停请求</button>
+    <button onclick="resumeRequests()">重新开始请求</button>
+
+    <div id="response"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function sendRequest1 () {
+            axios.get('https://jsonplaceholder.typicode.com/posts/1').then( response => {
+                document.getElementById('response').innerText += JSON.stringify(response.data) + '\n';
+            })
+        }
+        // 请求队列
+        const requestQueue = [
+            'https://jsonplaceholder.typicode.com/posts/1',
+            'https://jsonplaceholder.typicode.com/posts/2',
+            'https://jsonplaceholder.typicode.com/posts/3'
+        ];
+
+        // 控制请求是否应该被发送的标志
+        let shouldSendRequests = false;
+        let currentRequestIndex = 0;
+
+        // 发送请求的函数
+        function sendRequest(url) {
+            axios.get(url)
+                .then(response => {
+                    document.getElementById('response').innerText += JSON.stringify(response.data) + '\n';
+                    executeNextRequest();
+                })
+                .catch(error => {
+                    console.error('请求出错：', error);
+                    executeNextRequest();
+                });
+        }
+
+        // 开始请求队列
+        function startRequests() {
+            shouldSendRequests = true;
+            executeNextRequest();
+        }
+
+        // 暂停请求队列
+        function pauseRequests() {
+            shouldSendRequests = false;
+        }
+
+        // 重新开始请求队列
+        function resumeRequests() {
+            shouldSendRequests = true;
+            executeNextRequest();
+        }
+
+        // 执行下一个请求
+        function executeNextRequest() {
+            if (shouldSendRequests && currentRequestIndex < requestQueue.length) {
+                sendRequest(requestQueue[currentRequestIndex]);
+                currentRequestIndex++;
+            } else {
+                console.log('请求队列已暂停或已完成');
+            }
+        }
+    </script>
+</body>
+</html>

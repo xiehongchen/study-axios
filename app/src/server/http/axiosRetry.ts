@@ -2,6 +2,7 @@ import type { AxiosError, AxiosInstance } from "axios";
 
 export function retry(instance: AxiosInstance, err: AxiosError) {
   const config: any = err.config
+  console.log('config', config)
   const { waitTime, count } = config.retryConfig ?? {}
   config.currentCount = config.currentCount ?? 0
   console.log(`第${config.currentCount}次重连`)

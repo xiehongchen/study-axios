@@ -3,7 +3,7 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Inte
 import axios from 'axios'
 import AbortAxios from './AbortAxios'
 
-class AxiosMax {
+class AxiosTest {
   // axios实例, 通过axios.create()方法创建
   private axiosInstance: AxiosInstance
   // 传入的配置
@@ -103,4 +103,4 @@ class AxiosMax {
   }
 }
 
-export default AxiosMax
+export default AxiosTest

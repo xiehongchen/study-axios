@@ -1,3 +1,12 @@
+/*
+ * @Author: xiehongchen 1754581057@qq.com
+ * @Date: 2024-03-01 11:59:46
+ * @LastEditors: xiehongchen 1754581057@qq.com
+ * @LastEditTime: 2024-03-01 16:42:55
+ * @FilePath: /study-axios/app/src/server/http/AbortAxios.ts
+ * @Description: 
+ * 认真学习每一天
+ */
 import { AxiosRequestConfig } from "axios"
 
 /**
@@ -15,7 +24,12 @@ const getUrl = (config: AxiosRequestConfig) => {
 }
 
 class AbortAxios {
+  /**
+   * 添加请求
+   * @param config 请求配置
+   */
   addPending(config: AxiosRequestConfig) {
+    console.log('pendingMap---before', pendingMap)
     this.removePending(config)
     const url = getUrl(config)
     const abortController = new AbortController()
@@ -23,8 +37,13 @@ class AbortAxios {
     if (!pendingMap.has(url)) {
       pendingMap.set(url, abortController)
     }
+    console.log('pendingMap---after', pendingMap)
   }
 
+  /**
+   * 删除指定的请求
+   * @param config 请求配置
+   */
   removePending(config: AxiosRequestConfig) {
     const url = getUrl(config)
     if (pendingMap.has(url)) {
@@ -34,6 +53,9 @@ class AbortAxios {
     }
   }
 
+  /**
+   * 清除所有等待中的请求
+   */
   removeAllPending() {
     pendingMap.forEach((abortController) => {
       abortController.abort()
@@ -41,6 +63,9 @@ class AbortAxios {
     this.clear()
   }
 
+  /**
+   * 重置
+   */
   clear() {
     pendingMap.clear()
   }
